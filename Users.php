@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Task Management
  * @author    Ntabethemba Ntshoza
@@ -158,30 +159,137 @@ class User
      * 
      * @return mixed
      */
-    function validatePassword($password) {
+    function validatePassword($password)
+    {
         // Check password length
         if (strlen($password) < 8) {
             return false;
         }
-    
+
         // Check for at least one uppercase letter
         if (!preg_match('/[A-Z]/', $password)) {
             return false;
         }
-    
+
         // Check for at least one lowercase letter
         if (!preg_match('/[a-z]/', $password)) {
             return false;
         }
-    
+
         // Check for at least one digit
         if (!preg_match('/\d/', $password)) {
             return false;
         }
-    
+
         // Password passed all checks
         return true;
-    }    
+    }
+
+    public function forgotPassword($email)
+    {
+        global $db;
+        // Check if the email exists in the database
+        if ($this->emailExists($email)) {
+            // Generate a reset token and set it in the database
+            $resetToken = bin2hex(random_bytes(16)); // Generate a random token
+            $resetExpiration = date('Y-m-d H:i:s', strtotime('+1 hour')); // Set expiration time
+
+            // Update the user's reset_token and reset_expiration in the database
+            $sql = "UPDATE users SET reset_token = ?, reset_expiration = ? WHERE email = ?";
+            // $stmt = $this->conn->prepare($sql);
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param('sss', $resetToken, $resetExpiration, $email);
+
+            if ($stmt->execute()) {
+                // Send a reset email to the user with a link to reset their password
+                $resetLink = "http://ekomi.local/task-dashboard/resetPassword.php?email=" . $email . "&token=" . $resetToken; //edit this to your website
+                $message = "To reset your password, click on the following link:\n" . "<a href='{$resetLink}'>Reset your password now</a>";
+
+                // send email can be configured in the live site
+                // $to = "{$email}";
+                // $subject = "Reset your account";
+                // $message = "{$message }";
+                // $headers = "From: NNtshoza@Mrpricegroup.com";
+
+                // // Send email
+                // if (mail($to, $subject, $message, $headers)) {
+                //     echo "Email sent successfully!";
+                // } else {
+                //     echo "Email sending failed.";
+                // }
+
+                $_SESSION['reset_password'] =  $message;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    private function emailExists($email)
+    {
+        global $db; // Use the database connection from connect.php
+
+        // Prepare the SQL statement to fetch all users
+        $sql = "SELECT * FROM users";
+
+        // Execute the query
+        $result = $db->query($sql);
+
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                if ($email == $row['email']) {
+                    return true;
+                }
+            }
+
+            $_SESSION['wrong_email'] =  "{$email} does not exist...";
+            // The loop has finished checking all users, and the email doesn't exist
+            return false;
+        }
+    }
+
+
+    public function isValidPasswordResetRequest($email, $token) {
+        global $db; // Use the database connection from connect.php or your configuration file.
+
+        // Prepare a SQL statement to check if the email and token match a valid reset request.
+        $sql = "SELECT email FROM users WHERE email = ? AND reset_token = ? AND reset_expiration > NOW()";
+
+        // Use prepared statements to prevent SQL injection.
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ss", $email, $token);
+        $stmt->execute();
+        $stmt->store_result();
+        
+        // If a row is found, the request is valid.
+        $isValid = ($stmt->num_rows === 1);
+
+        $stmt->close();
+
+        return $isValid;
+    }
+
+    public function updatePassword($email, $newPassword) {
+        global $db; // Use the database connection from connect.php or your configuration file.
+
+        // Hash the new password (you should use a secure hashing method).
+        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+
+        // Prepare an SQL statement to update the user's password.
+        $sql = "UPDATE users SET password = ? WHERE email = ?";
+
+        // Use prepared statements to prevent SQL injection.
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ss", $hashedPassword, $email);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        // Return true if the update was successful, false otherwise.
+        return $result;
+    }
 
     /**
      * Get All users

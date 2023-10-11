@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         } else {
             // Authentication failed, show an error message
-            $loginError = 'Invalid email or password.';
+            $loginError = 'Invalid email or password check your email or reset y.';
         }
     } elseif (isset($_POST['create'])) {
         // User clicked the "Create User" button
@@ -129,6 +129,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row">
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-primary" name="login">Log In</button>
+                                
+                                <p class="m-0 d-inline">  <a href="forgotPassword.php">Forgot Password?</a></p>
                             </div>
                             <div class="col-md-6 text-right">
                                 <p class="m-0 d-inline">Not a member?</p>

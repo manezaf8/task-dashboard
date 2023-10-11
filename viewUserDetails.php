@@ -1,3 +1,25 @@
+<?php
+
+/**
+ * @package   Task Management
+ * @author    Ntabethemba Ntshoza
+ * @date      11-10-2023
+ * @copyright Copyright © 2023 VMP By Maneza
+ */
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require 'Task.php'; // Include the Task class
+// Include the weather integration file
+require 'weather.php';
+
+// Define your OpenWeatherMap API key and city
+$apiKey = '4e8f3a3d6960a08f787632c2eca2e89f';
+$city = 'Cape Town';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +32,20 @@
 </head>
 
 <body>
+        <!-- content goes here -->
+        <div class="container">
+        <?php $weatherData = getCurrentWeather($city, $apiKey); ?>
+
+        <!-- Styling for weather information -->
+        <div style="background-color: #f0f0f0; padding: 20px; text-align: center;">
+            <h3>Current Weather</h3>
+            <p>City: <?php echo $weatherData["name"]; ?></p>
+            <p>Current Temp: <?php echo $weatherData["main"]["temp"]; ?></p>
+            <p>Min: <?php echo $weatherData["main"]["temp_min"]; ?></p>
+            <p>Max: <?php echo $weatherData["main"]["temp_max"]; ?></p>
+            <p>Weather: <?php echo $weatherData["weather"][0]["description"]; ?></p>
+        </div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
