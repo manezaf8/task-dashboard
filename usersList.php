@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package   Task Management
+ * @author    Ntabethemba Ntshoza
+ * @date      11-10-2023
+ * @copyright Copyright © 2023 VMP By Maneza
+ */
+
 // session_start();
 
 error_reporting(E_ALL);
@@ -13,7 +20,7 @@ require 'weather.php';
 $apiKey = '4e8f3a3d6960a08f787632c2eca2e89f';
 $city = 'Cape Town';
 
-
+// User class
 $usersClass = new User();
 ?>
 
@@ -53,7 +60,7 @@ $usersClass = new User();
         <h1 style=" text-align: center;">Listed Users</h1>
 
         <div id="logoutAndNewTask">
-        <?php echo '<a href="createTask.php" class="btn btn-primary">Create a Task</a>'; ?>
+            <?php echo '<a href="createTask.php" class="btn btn-primary">Create a Task</a>'; ?>
             <button onclick="logoutNow()" class="btn btn-danger btn-sm" style="margin-left: 1em;">Logout</button>
         </div>
 

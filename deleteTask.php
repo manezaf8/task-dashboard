@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package   Task Management
+ * @author    Ntabethemba Ntshoza
+ * @date      11-10-2023
+ * @copyright Copyright © 2023 VMP By Maneza
+ */
+
 require 'Task.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
@@ -15,4 +22,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
 } else {
     echo "Invalid request.";
 }
-?>

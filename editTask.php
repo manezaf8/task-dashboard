@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @package   Task Management
+ * @author    Ntabethemba Ntshoza
+ * @date      11-10-2023
+ * @copyright Copyright © 2023 VMP By Maneza
+ */
+
 // Include the Task class and necessary files
 require 'Task.php';
 require 'Connection.php'; // Include the database connection file

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package   Task Management
+ * @author    Ntabethemba Ntshoza
+ * @date      11-10-2023
+ * @copyright Copyright © 2023 VMP By Maneza
+ */
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -16,14 +23,12 @@ class Task
     private $userId;
     private $completed;
 
-    private $users;
-
-    // Constructor
-    // public function __construct(User $users)
-    // {
-    //     $users->users = $users;
-    // }
-
+    /**
+     * Set Id
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function setId($id)
     {
         // Validate and sanitize the ID, e.g., ensure it's a positive integer
@@ -89,13 +94,11 @@ class Task
 
     public function setCompleted($completed)
     {
-        // Validate and sanitize the completed flag, e.g., ensure it's a boolean
         $this->completed = (bool)$completed;
     }
 
     public function getCompleted($completed)
     {
-        // Validate and sanitize the completed flag, e.g., ensure it's a boolean
         return $this->completed;
     }
 
@@ -104,7 +107,11 @@ class Task
         return $this->completed;
     }
 
-    // Function to save a new task to the database
+    /**
+     * Save New users
+     *
+     * @return bool
+     */
     public function save()
     {
         global $db; // Use the database connection from connect.php
@@ -138,7 +145,11 @@ class Task
         }
     }
 
-    // Function to retrieve tasks from the database
+    /**
+     * Get All Tasks
+     *
+     * @return array
+     */
     public static function getAllTasks()
     {
         global $db; // Use the database connection from connect.php
@@ -165,8 +176,11 @@ class Task
         return $tasks;
     }
 
-    // ... (other methods for updating and deleting tasks)
-    // Function to update an existing task in the database
+    /**
+     * Update Tasks
+     *
+     * @return void
+     */
     public function update()
     {
         global $db; // Use the database connection from connect.php
@@ -214,6 +228,12 @@ class Task
         }
     }
 
+    /**
+     * Get Tasks by ID
+     *
+     * @param mixed $id
+     * 
+     */
     public static function getTaskById($id)
     {
         global $db; // Use the database connection from connect.php

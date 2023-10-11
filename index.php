@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @package   Task Management
+ * @author    Ntabethemba Ntshoza
+ * @date      11-10-2023
+ * @copyright Copyright © 2023 VMP By Maneza
+ */
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -74,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 </head>
+
 <body>
     <div class="container">
         <div class="login-container">
@@ -84,25 +93,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- <p>Login or Register:</p> -->
 
             <?php
-if (isset($_SESSION['registration_error'])) {
-    // Use SweetAlert to display the error message
-    echo '<script>
+            if (isset($_SESSION['registration_error'])) {
+                // Use SweetAlert to display the error message
+                echo '<script>
                         Swal.fire({
                             icon: "error",
                             title: "Error",
                             text: "' . $_SESSION['registration_error'] . '"
                         });
                     </script>';
-    // Clear the session variable
-    unset($_SESSION['registration_error']);
-}
-?>
+                // Clear the session variable
+                unset($_SESSION['registration_error']);
+            }
+            ?>
 
-            <?php if (isset($_SESSION['registration_success'])): ?>
+            <?php if (isset($_SESSION['registration_success'])) : ?>
                 <div class="alert alert-success"><?php echo $_SESSION['registration_success']; ?></div>
                 <?php unset($_SESSION['registration_success']); // Clear the message after displaying
-?>
-            <?php endif;?>
+                ?>
+            <?php endif; ?>
 
             <div class="row" id="formLogin">
                 <div class="col-md-6 login-form">
@@ -127,12 +136,12 @@ if (isset($_SESSION['registration_error'])) {
                             </div>
                         </div>
 
-                        <?php if (isset($loginError)): ?>
+                        <?php if (isset($loginError)) : ?>
                             <p class="text-danger"><?php echo $loginError; ?></p>
-                        <?php endif;?>
-                        <?php if (isset($createUserError)): ?>
+                        <?php endif; ?>
+                        <?php if (isset($createUserError)) : ?>
                             <p class="text-danger"><?php echo $createUserError; ?></p>
-                        <?php endif;?>
+                        <?php endif; ?>
                     </form>
                 </div>
             </div>
@@ -163,9 +172,9 @@ if (isset($_SESSION['registration_error'])) {
                             <input type="password" class="form-control" id="createPassword" name="password" required>
                         </div>
                         <button type="submit" class="btn btn-success" name="create">Create User</button>
-                        <?php if (isset($createUserSuccess)): ?>
+                        <?php if (isset($createUserSuccess)) : ?>
                             <p class="text-success"><?php echo $createUserSuccess; ?></p>
-                        <?php endif;?>
+                        <?php endif; ?>
                     </form>
                 </div>
             </div>
@@ -177,4 +186,5 @@ if (isset($_SESSION['registration_error'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
+
 </html>

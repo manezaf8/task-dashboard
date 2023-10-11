@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @package   Task Management
+ * @author    Ntabethemba Ntshoza
+ * @date      11-10-2023
+ * @copyright Copyright © 2023 VMP By Maneza
+ */
+
 // Database credentials
 $dbHost = 'localhost';
 $dbName = 'ekomi';
@@ -16,4 +24,3 @@ try {
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
-?>
