@@ -5,7 +5,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require 'Task.php'; // Include the Task class
+require 'Users.php'; // Include the Task class
 // Include the weather integration file
 require 'weather.php';
 
@@ -14,7 +14,7 @@ $apiKey = '4e8f3a3d6960a08f787632c2eca2e89f';
 $city = 'Cape Town';
 
 
-$taskClass = new Task();
+$usersClass = new User();
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ $taskClass = new Task();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management - View All Tasks</title>
+    <title>Task Management - View All Users</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="includes/styles.css">
@@ -50,36 +50,18 @@ $taskClass = new Task();
             <p>Weather: <?php echo $weatherData["weather"][0]["description"]; ?></p>
         </div>
 
-        <h1 style=" text-align: center;">Listed Tasks</h1>
-
-        <?php if (isset($_SESSION['login_success'])) : ?>
-            <div class="alert alert-success"><?php echo $_SESSION['login_success']; ?></div>
-            <?php unset($_SESSION['login_success']); // Clear the message after displaying 
-            ?>
-        <?php endif; ?>
+        <h1 style=" text-align: center;">Listed Users</h1>
 
         <div id="logoutAndNewTask">
         <?php echo '<a href="createTask.php" class="btn btn-primary">Create a Task</a>'; ?>
             <button onclick="logoutNow()" class="btn btn-danger btn-sm" style="margin-left: 1em;">Logout</button>
         </div>
 
-        <?php
-        // Check if the delete_success query parameter is set
-        if (isset($_GET['delete_success']) && $_GET['delete_success'] == 1) {
-            echo '<div class="alert alert-success">Task deleted successfully!</div>';
-        }
-
-        if (isset($_GET['edit_success']) && $_GET['edit_success'] == 1) {
-            echo '<div class="alert alert-success">Task edited successfully!</div>';
-        }
-
-        ?>
-
 
         <?php
-        $alltasks = $taskClass->getAllTasks();
+        $allusers = $usersClass->getallusers();
         // Check if there are no tasks, and display the "Create Task" button if true
-        if (empty($alltasks)) {
+        if (empty($allusers)) {
             echo '<a  href="createTask.php" class="btn btn-primary">Create a Task</a>';
         } else {
         ?>
@@ -87,40 +69,21 @@ $taskClass = new Task();
             <table id="taskTable" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th data-orderable="false">Description</th>
-                        <th>Due Date</th>
-                        <th>Completed</th>
                         <th>User ID</th>
-                        <th data-orderable="false">Action</th>
+                        <th>User Name</th>
+                        <th>User Email</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $tasks = $taskClass->getAllTasks();
+                    $users = $usersClass->getallusers();
                     ?>
                     <!-- Loop through your tasks and display them as table rows -->
-                    <?php foreach ($tasks as $task) : ?>
+                    <?php foreach ($users as $user) : ?>
                         <tr>
-                            <td><?php echo $task->getId(); ?></td>
-                            <td><?php echo $task->getTitle(); ?></td>
-                            <td><?php echo $task->getDescription(); ?></td>
-                            <td><?php echo $task->getDueDate(); ?></td>
-                            <td><?php echo $task->isCompleted() ? 'Yes' : 'No'; ?></td>
-                            <td>
-                                <!-- Display user ID as a clickable link -->
-                                <a href="viewUserDetails.php?user_id=<?php echo $task->getUserId(); ?>">
-                                    <?php echo $task->getUserId(); ?>
-                                </a>
-                            </td>
-                            <td>
-                                <!-- Edit button -->
-                                <button onclick="editTask(<?php echo $task->getId(); ?>)" class="btn btn-primary btn-sm">Edit</button>
-
-                                <!-- Delete button -->
-                                <button onclick="deleteTask(<?php echo $task->getId(); ?>)" class="btn btn-danger btn-sm">Delete</button>
-                            </td>
+                            <td><?php echo $user->getUserId(); ?></td>
+                            <td><?php echo $user->getName(); ?></td>
+                            <td><?php echo $user->getEmail(); ?></td>
 
                             <!-- JavaScript function to confirm and delete the task -->
                             <script>
@@ -152,7 +115,7 @@ $taskClass = new Task();
             </table>
         <?php
         } // End of else block
-        echo '<a href="usersList.php" class="btn btn-primary">View All Users</a>';
+        echo '<a href="viewAllTasks.php" class="btn btn-primary">View All Tasks</a>';
         ?>
     </div>
 

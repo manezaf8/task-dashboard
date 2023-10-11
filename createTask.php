@@ -7,6 +7,12 @@ ini_set('display_errors', 1);
 
 require 'Task.php'; // Include the Task class
 require 'Users.php'; // Include the Task class
+// Include the weather integration file
+require 'weather.php';
+
+// Define your OpenWeatherMap API key and city
+$apiKey = '4e8f3a3d6960a08f787632c2eca2e89f';
+$city = 'Cape Town';
 
 $users = new User();
 
@@ -52,6 +58,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="container">
+
+    <?php $weatherData = getCurrentWeather($city, $apiKey); ?>
+
+<!-- Styling for weather information -->
+<div style="background-color: #f0f0f0; padding: 20px; text-align: center;">
+    <h3>Current Weather</h3>
+    <p>City: <?php echo $weatherData["name"]; ?></p>
+    <p>Current Temp: <?php echo $weatherData["main"]["temp"]; ?></p>
+    <p>Min: <?php echo $weatherData["main"]["temp_min"]; ?></p>
+    <p>Max: <?php echo $weatherData["main"]["temp_max"]; ?></p>
+    <p>Weather: <?php echo $weatherData["weather"][0]["description"]; ?></p>
+</div>
+
         <h1 class="text-center">Add a New Task</h1>
         <form class="form-horizontal col-md-6 col-md-offset-3" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <div class="form-group">
