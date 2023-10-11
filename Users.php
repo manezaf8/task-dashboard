@@ -185,6 +185,12 @@ class User
         return true;
     }
 
+    /**
+     * Forgot password function
+     *
+     * @param string $email
+     * @return Bool
+     */
     public function forgotPassword($email)
     {
         global $db;
@@ -204,20 +210,6 @@ class User
                 // Send a reset email to the user with a link to reset their password
                 $resetLink = "http://ekomi.local/task-dashboard/resetPassword.php?email=" . $email . "&token=" . $resetToken; //edit this to your website
                 $message = "To reset your password, click on the following link:\n" . "<a href='{$resetLink}'>Reset your password now</a>";
-
-                // send email can be configured in the live site
-                // $to = "{$email}";
-                // $subject = "Reset your account";
-                // $message = "{$message }";
-                // $headers = "From: NNtshoza@Mrpricegroup.com";
-
-                // // Send email
-                // if (mail($to, $subject, $message, $headers)) {
-                //     echo "Email sent successfully!";
-                // } else {
-                //     echo "Email sending failed.";
-                // }
-
                 $_SESSION['reset_password'] =  $message;
 
                 return true;
@@ -251,7 +243,6 @@ class User
         }
     }
 
-
     public function isValidPasswordResetRequest($email, $token) {
         global $db; // Use the database connection from connect.php or your configuration file.
 
@@ -272,6 +263,13 @@ class User
         return $isValid;
     }
 
+    /**
+     * Update Password function
+     *
+     * @param string $email
+     * @param string $newPassword
+     * @return void
+     */
     public function updatePassword($email, $newPassword) {
         global $db; // Use the database connection from connect.php or your configuration file.
 
@@ -359,7 +357,11 @@ class User
     }
 
 
-    // Function to update an existing user in the database
+    /**
+     * Function to update an existing user in the database
+     *
+     * @return Bool
+     */
     public function update()
     {
         global $db; // Use the database connection from connect.php
@@ -388,7 +390,11 @@ class User
         }
     }
 
-    // Function to delete a user from the database
+    /**
+     * Delete users
+     *
+     * @return bool
+     */
     public function delete()
     {
         global $db; // Use the database connection from connect.php
@@ -405,12 +411,5 @@ class User
         } else {
             return false; // Task could not be deleted
         }
-    }
-
-    // Function to validate user data before saving or updating
-    public function validate()
-    {
-        // Implement validation rules for user data (e.g., check email format, password strength, etc.)
-        // Return true if data is valid, false otherwise
     }
 }

@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         } else {
             // Authentication failed, show an error message
-            $loginError = 'Invalid email or password check your email or reset y.';
+            $loginError = 'Invalid email or password check your email or reset.';
         }
     } elseif (isset($_POST['create'])) {
         // User clicked the "Create User" button
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row" id="formLogin">
                 <div class="col-md-6 login-form">
                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="loginForm">
-                        <h3>Task Management Log In</h3>
+                        <h3 style="padding-bottom: 20px;"> Log In To The Task Management</h3>
                         <!-- Add login form fields here -->
                         <div class="form-group">
                             <label for="loginEmail">Email:</label>

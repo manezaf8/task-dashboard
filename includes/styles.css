@@ -18,7 +18,7 @@ body{
     margin: 0 auto;
     max-width: 400px; /* Adjust the width as needed */
     padding: 20px;
-    background-color: #fff; /* Form background color */
+    background-color: rgb(42, 225, 238); /* Form background color */
     border-radius: 10px; /* Add rounded corners */
 }
 
@@ -27,7 +27,7 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: #919191;
+    background: #f5f5f5;
     padding: 3em;
 }
 
@@ -47,3 +47,11 @@ body{
     padding-bottom: 10px;
 }
 
+#createUserForm {
+    padding: 25px;
+    background-color: rgb(42, 225, 238); /* Form background color */
+}
+
+#viewTasksCols td{
+    padding: 7px;
+}

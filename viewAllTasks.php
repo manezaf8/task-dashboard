@@ -108,7 +108,7 @@ $taskClass = new Task();
                     ?>
                     <!-- Loop through your tasks and display them as table rows -->
                     <?php foreach ($tasks as $task) : ?>
-                        <tr>
+                        <tr id="viewTasksCols">
                             <td><?php echo $task->getId(); ?></td>
                             <td><?php echo $task->getTitle(); ?></td>
                             <td><?php echo $task->getDescription(); ?></td>
