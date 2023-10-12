@@ -41,8 +41,6 @@ $city = 'Cape Town';
             <h3>Current Weather</h3>
             <p>City: <?php echo $weatherData["name"]; ?></p>
             <p>Current Temp: <?php echo $weatherData["main"]["temp"]; ?></p>
-            <p>Min: <?php echo $weatherData["main"]["temp_min"]; ?></p>
-            <p>Max: <?php echo $weatherData["main"]["temp_max"]; ?></p>
             <p>Weather: <?php echo $weatherData["weather"][0]["description"]; ?></p>
         </div>
 

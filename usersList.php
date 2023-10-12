@@ -52,8 +52,6 @@ $usersClass = new User();
             <h3>Current Weather</h3>
             <p>City: <?php echo $weatherData["name"]; ?></p>
             <p>Current Temp: <?php echo $weatherData["main"]["temp"]; ?></p>
-            <p>Min: <?php echo $weatherData["main"]["temp_min"]; ?></p>
-            <p>Max: <?php echo $weatherData["main"]["temp_max"]; ?></p>
             <p>Weather: <?php echo $weatherData["weather"][0]["description"]; ?></p>
         </div>
 
@@ -61,7 +59,7 @@ $usersClass = new User();
 
         <div id="logoutAndNewTask">
             <?php echo '<a href="createTask.php" class="btn btn-primary">Create a Task</a>'; ?>
-            <button onclick="logoutNow()" class="btn btn-danger btn-sm" style="margin-left: 1em;">Logout</button>
+            <button onclick="logoutNow()" class="btn btn-danger" style="margin-left: 1em;">Logout</button>
         </div>
 
 
@@ -94,25 +92,10 @@ $usersClass = new User();
 
                             <!-- JavaScript function to confirm and delete the task -->
                             <script>
-                                function deleteTask(taskId) {
-                                    if (confirm("Are you sure you want to delete this task?")) {
-                                        // Redirect to deleteTask.php with the task ID
-                                        window.location.href = "deleteTask.php?id=" + taskId;
-                                    }
-                                }
-
                                 function logoutNow() {
                                     if (confirm("Are you sure you want to logout?")) {
                                         // Redirect to logout.php
                                         window.location.href = "logout.php";
-                                    }
-                                }
-
-
-                                function editTask(taskId) {
-                                    if (confirm("Are you sure you want to edit this task?")) {
-                                        // Redirect to deleteTask.php with the task ID
-                                        window.location.href = "editTask.php?id=" + taskId;
                                     }
                                 }
                             </script>

@@ -31,7 +31,7 @@ $taskClass = new Task();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management - View All Tasks</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="includes/styles.css">
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -51,8 +51,6 @@ $taskClass = new Task();
             <h3>Current Weather</h3>
             <p>City: <?php echo $weatherData["name"]; ?></p>
             <p>Current Temp: <?php echo $weatherData["main"]["temp"]; ?></p>
-            <p>Min: <?php echo $weatherData["main"]["temp_min"]; ?></p>
-            <p>Max: <?php echo $weatherData["main"]["temp_max"]; ?></p>
             <p>Weather: <?php echo $weatherData["weather"][0]["description"]; ?></p>
         </div>
 
@@ -66,7 +64,7 @@ $taskClass = new Task();
 
         <div id="logoutAndNewTask">
         <?php echo '<a href="createTask.php" class="btn btn-primary">Create a Task</a>'; ?>
-            <button onclick="logoutNow()" class="btn btn-danger btn-sm" style="margin-left: 1em;">Logout</button>
+            <button onclick="logoutNow()" class="btn btn-danger" style="margin-left: 1em;">Logout</button>
         </div>
 
         <?php
@@ -122,10 +120,10 @@ $taskClass = new Task();
                             </td>
                             <td>
                                 <!-- Edit button -->
-                                <button onclick="editTask(<?php echo $task->getId(); ?>)" class="btn btn-primary btn-sm">Edit</button>
+                                <button  onclick="editTask(<?php echo $task->getId(); ?>)" class="btn btn-primary btn-sm">Edit</button>
 
                                 <!-- Delete button -->
-                                <button onclick="deleteTask(<?php echo $task->getId(); ?>)" class="btn btn-danger btn-sm">Delete</button>
+                                <button style="float: right;" onclick="deleteTask(<?php echo $task->getId(); ?>)" class="btn btn-danger btn-sm">Delete</button>
                             </td>
 
                             <!-- JavaScript function to confirm and delete the task -->
@@ -163,7 +161,7 @@ $taskClass = new Task();
     </div>
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <!-- Initialize DataTables -->
     <script type="text/javascript">
