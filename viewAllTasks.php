@@ -97,7 +97,8 @@ $taskClass = new Task();
                         <th>Due Date</th>
                         <th>Completed</th>
                         <th>User ID</th>
-                        <th data-orderable="false">Action</th>
+                        <th data-orderable="false">Edit</th>
+                        <th data-orderable="false">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,7 +107,7 @@ $taskClass = new Task();
                     ?>
                     <!-- Loop through your tasks and display them as table rows -->
                     <?php foreach ($tasks as $task) : ?>
-                        <tr id="viewTasksCols">
+                        <tr>
                             <td><?php echo $task->getId(); ?></td>
                             <td><?php echo $task->getTitle(); ?></td>
                             <td><?php echo $task->getDescription(); ?></td>
@@ -121,9 +122,10 @@ $taskClass = new Task();
                             <td>
                                 <!-- Edit button -->
                                 <button  onclick="editTask(<?php echo $task->getId(); ?>)" class="btn btn-primary btn-sm">Edit</button>
-
+                            </td>
+                            <td> 
                                 <!-- Delete button -->
-                                <button style="float: right;" onclick="deleteTask(<?php echo $task->getId(); ?>)" class="btn btn-danger btn-sm">Delete</button>
+                                <button onclick="deleteTask(<?php echo $task->getId(); ?>)" class="btn btn-danger btn-sm">Delete</button>
                             </td>
 
                             <!-- JavaScript function to confirm and delete the task -->

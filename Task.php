@@ -58,7 +58,10 @@ class Task
 
     public function setDescription($description)
     {
-        // You can add more validation for the description if needed
+        //validation for the description if needed
+        $this->description = trim($description); //remove html tags
+        $this->description = strip_tags($description); //remove empty spaces;
+        $this->description = stripslashes($description); //remove empty spaces;
         $this->description = $description;
     }
 

@@ -51,7 +51,3 @@ body{
     padding: 25px;
     background-color: rgb(42, 225, 238); /* Form background color */
 }
-
-#viewTasksCols td{
-    padding: 6px;
-}
