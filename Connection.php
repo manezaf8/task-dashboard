@@ -8,19 +8,13 @@
  */
 
 // Database credentials
-$dbHost = 'localhost';
+$dbHost = 'db';
 $dbName = 'ekomi';
-$dbUser = 'root';
-$dbPassword = '';
+$dbUser = 'admin';
+$dbPassword = 'admin124';
 
-try {
-    // Create a new PDO instance
-    $db = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
+$db = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
 
-    if (!$db) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
-} catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+if ($db->connect_error) {
+    die("Connection failed: " . $db->connect_error);
 }

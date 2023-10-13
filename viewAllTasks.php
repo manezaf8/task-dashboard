@@ -70,11 +70,11 @@ $taskClass = new Task();
         <?php
         // Check if the delete_success query parameter is set
         if (isset($_GET['delete_success']) && $_GET['delete_success'] == 1) {
-            echo '<div class="alert alert-success">Task deleted successfully!</div>';
+            echo '<div class="alert alert-success">Task ' . $taskClass->geId() . ' deleted successfully!</div>';
         }
 
         if (isset($_GET['edit_success']) && $_GET['edit_success'] == 1) {
-            echo '<div class="alert alert-success">Task edited successfully!</div>';
+            echo '<div class="alert alert-success">Task ' . $taskClass->getId() . ' edited successfully!</div>';
         }
 
         ?>

@@ -13,8 +13,20 @@ require 'Connection.php'; // Include the database connection file
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+    $userId  = null;
+    $taskId  = null;
+
+    header("Location: viewAllTasks.php?id={$taskId}&edit_success=1");
+    session_start();
+
     // Get the task ID from the form
     $taskId = $_POST['id'];
+
+    if (isset($_SESSION['user_id'])) {
+        $userId = $_SESSION['user_id'];
+    }
 
     // Create an instance of the Task class
     $task = new Task();
@@ -24,14 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task->setTitle($_POST['title']);
     $task->setDescription($_POST['description']);
     $task->setDueDate($_POST['due_date']);
-    // $task->setUserId($_POST['user_id']);
+    $task->setUserId($userId);
     $task->setCompleted(isset($_POST['completed']) ? 1 : 0);
 
     // Update the task in the database
     if ($task->update()) {
         // Redirect back to edit page with success message
-        header("Location: viewAllTasks.php?id={$taskId}&edit_success=1");
-        exit();
+        echo "Updated successfully!";
     }
 }
 
@@ -74,7 +85,7 @@ if (isset($_GET['id'])) {
         <!-- Display success message if present in the URL -->
         <?php
         if (isset($_GET['edit_success']) && $_GET['edit_success'] == 1) {
-            echo '<div class="alert alert-success">Task edited successfully!</div>';
+            echo '<div class="alert alert-success">Task ' . $task->getTaskId() . ' edited successfully!</div>';
         }
         ?>
 

@@ -72,12 +72,11 @@ class Task
 
     public function setDueDate($dueDate)
     {
-        // Validate and sanitize the dueDate, e.g., ensure it's a valid date format
-        if (strtotime($dueDate)) {
-            $this->dueDate = $dueDate;
-        } else {
-            throw new InvalidArgumentException('Invalid due date');
+        if ($dueDate === null) {
+            throw new InvalidArgumentException('Due date cannot be null.');
         }
+        // Additional validation or formatting of the due date can be done here.
+        $this->dueDate = $dueDate;
     }
 
     public function getDueDate()
@@ -120,7 +119,7 @@ class Task
         global $db; // Use the database connection from connect.php
 
         // Prepare the SQL statement
-        $sql = "INSERT INTO tasks (title, description, created_at, user_id, completed) 
+        $sql = "INSERT INTO tasks (title, description, due_date, user_id, completed) 
         VALUES (?, ?, ?, ?, ?)";
 
         // You should adjust this logic based on your actual application flow.
@@ -192,7 +191,11 @@ class Task
         $sql = "UPDATE tasks 
                 SET title = ?, description = ?, due_date = ?, user_id = ?, completed = ? 
                 WHERE id = ?";
-
+        $userId = null;
+        
+        if (isset($_SESSION['user_id'])) {
+            $userId = $_SESSION['user_id'];
+        }
         // Bind parameters and execute the query
         $stmt = $db->prepare($sql);
         $stmt->bind_param(
