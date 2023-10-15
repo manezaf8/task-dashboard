@@ -7,8 +7,6 @@
  * @copyright Copyright © 2023 VMP By Maneza
  */
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 // use User;
 
@@ -70,13 +68,10 @@ class Task
         return $this->description;
     }
 
-    public function setDueDate($dueDate)
-    {
-        if ($dueDate === null) {
-            throw new InvalidArgumentException('Due date cannot be null.');
+    public function setDueDate($dueDate) {
+        if ($dueDate !== null) {
+            $this->dueDate = $dueDate;
         }
-        // Additional validation or formatting of the due date can be done here.
-        $this->dueDate = $dueDate;
     }
 
     public function getDueDate()
@@ -139,7 +134,7 @@ class Task
 
         if ($stmt->execute()) {
 
-            echo "Task: {$this->getTitle()} saved successfully";
+            $_SESSION['task_saved'] = "Task: {$this->title} Saved successfully";
 
             return true; // 
         } else {
@@ -209,6 +204,7 @@ class Task
         );
 
         if ($stmt->execute()) {
+            $_SESSION['task_updated'] = "Task: {$this->title} saved successfully";
             return true; // Task updated successfully
         } else {
             return false; // Task could not be updated

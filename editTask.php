@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $taskId  = null;
 
     header("Location: viewAllTasks.php?id={$taskId}&edit_success=1");
-    session_start();
 
     // Get the task ID from the form
     $taskId = $_POST['id'];
@@ -31,11 +30,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Create an instance of the Task class
     $task = new Task();
 
+    $currentDate = date('Y-m-d H:i:s');
+    $dueDate = $_POST['due_date'];
+
     // Use setters to update task properties
     $task->setId($taskId);
     $task->setTitle($_POST['title']);
     $task->setDescription($_POST['description']);
-    $task->setDueDate($_POST['due_date']);
+
+    if (strtotime($dueDate) > strtotime($currentDate)) {
+        // Due date is in the future, it's valid
+        $task = new Task();
+        $task->setDueDate($dueDate);
+        // ...other properties and save logic
+    } else {
+        // Display an error message or take appropriate action
+        echo "Due date must be in the future.";
+    }    
+
     $task->setUserId($userId);
     $task->setCompleted(isset($_POST['completed']) ? 1 : 0);
 

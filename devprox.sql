@@ -20,5 +20,5 @@ CREATE TABLE tasks (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `due_date` timestamp NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (id) REFERENCES users(id)
 );

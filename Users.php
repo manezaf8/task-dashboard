@@ -7,10 +7,6 @@
  * @copyright Copyright © 2023 VMP By Maneza
  */
 
-// session_start();
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 include_once 'Connection.php'; // Include the database connection file
 
@@ -145,7 +141,7 @@ class User
 
             $_SESSION["user_id"] = $user["id"];
             $_SESSION["user_name"] = $user["name"];
-            $_SESSION['login_success'] = 'Logged in successfully!';
+            $_SESSION['login_success'] = 'Hey ' . $user["name"] . '  you are Logged in successfully!';
 
             return true; // Password is correct
         } else {
@@ -384,9 +380,9 @@ class User
         );
 
         if ($stmt->execute()) {
-            return true; // Task updated successfully
+            return true; // user updated successfully
         } else {
-            return false; // Task could not be updated
+            return false; // user could not be updated
         }
     }
 
@@ -407,9 +403,9 @@ class User
         $stmt->bind_param("i", $this->id);
 
         if ($stmt->execute()) {
-            return true; // Task deleted successfully
+            return true; // user deleted successfully
         } else {
-            return false; // Task could not be deleted
+            return false; // user could not be deleted
         }
     }
 }

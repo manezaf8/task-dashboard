@@ -7,8 +7,6 @@
  * @copyright Copyright © 2023 VMP By Maneza
  */
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 require 'Connection.php'; // Include the database connection file
 require 'Users.php'; // Include the User class

@@ -29,7 +29,7 @@ $allUsers = $users->getAllUsers();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //define headers 
     header('Location: viewAllTasks.php');
-    session_start();
+   
     // Retrieve the user ID from your authentication system or form input
     if (isset($_SESSION['user_id'])) {
         $userId = $_SESSION['user_id'];
@@ -76,6 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <h1 class="text-center">Add a New Task</h1>
+
+       <?php echo '<a href="viewAllTasks.php" class="btn btn-primary">View All Tasks</a>'; ?>
+
         <form class="form-horizontal col-md-6 col-md-offset-3" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <div class="form-group">
                 <label for="title" class="col-sm-2 control-label">Title:</label>

@@ -6,10 +6,6 @@
  * @copyright Copyright © 2023 VMP By Maneza
  */
 
-// session_start();
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 require 'Task.php'; // Include the Task class
 // Include the weather integration file
@@ -62,6 +58,18 @@ $taskClass = new Task();
             ?>
         <?php endif; ?>
 
+        <?php if (isset($_SESSION['task_saved'])) : ?>
+            <div class="alert alert-success"><?php echo $_SESSION['task_saved']; ?></div>
+            <?php unset($_SESSION['task_saved']); // Clear the message after displaying 
+            ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['task_updated'])) : ?>
+            <div class="alert alert-success"><?php echo $_SESSION['task_updated']; ?></div>
+            <?php unset($_SESSION['task_updated']); // Clear the message after displaying 
+            ?>
+        <?php endif; ?>
+
         <div id="logoutAndNewTask">
         <?php echo '<a href="createTask.php" class="btn btn-primary">Create a Task</a>'; ?>
             <button onclick="logoutNow()" class="btn btn-danger" style="margin-left: 1em;">Logout</button>
@@ -70,7 +78,7 @@ $taskClass = new Task();
         <?php
         // Check if the delete_success query parameter is set
         if (isset($_GET['delete_success']) && $_GET['delete_success'] == 1) {
-            echo '<div class="alert alert-success">Task ' . $taskClass->geId() . ' deleted successfully!</div>';
+            echo '<div class="alert alert-success">Task ' . $taskClass->getId() . ' deleted successfully!</div>';
         }
 
         if (isset($_GET['edit_success']) && $_GET['edit_success'] == 1) {
@@ -78,7 +86,6 @@ $taskClass = new Task();
         }
 
         ?>
-
 
         <?php
         $alltasks = $taskClass->getAllTasks();

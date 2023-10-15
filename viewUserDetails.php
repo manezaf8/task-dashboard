@@ -7,8 +7,6 @@
  * @copyright Copyright © 2023 VMP By Maneza
  */
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 require 'Task.php'; // Include the Task class
 // Include the weather integration file
@@ -48,8 +46,6 @@ $city = 'Cape Town';
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <?php
-                error_reporting(E_ALL);
-                ini_set('display_errors', 1);
 
                 require 'Users.php'; // Include the User class
 

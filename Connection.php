@@ -1,4 +1,9 @@
 <?php
+// session_start();
+
+if (session_id() === '') {
+    session_start();
+} 
 
 /**
  * @package   Task Management
@@ -8,10 +13,10 @@
  */
 
 // Database credentials
-$dbHost = 'db';
+$dbHost = 'localhost';
 $dbName = 'ekomi';
-$dbUser = 'admin';
-$dbPassword = 'admin124';
+$dbUser = 'root';
+$dbPassword = '';
 
 $db = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
 
