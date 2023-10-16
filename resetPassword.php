@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * @package   Task Management
+ * @author    Ntabethemba Ntshoza
+ * @date      11-10-2023
+ * @copyright Copyright © 2023 VMP By Maneza
+ */
+
+ 
 include 'Users.php'; // Include your User class or the file with user-related functions.
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

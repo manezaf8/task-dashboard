@@ -1,11 +1,7 @@
 <?php
-// session_start();
-
-if (session_id() === '') {
-    session_start();
-} else {
-   session_start();
-} 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 /**
  * @package   Task Management
@@ -13,6 +9,13 @@ if (session_id() === '') {
  * @date      11-10-2023
  * @copyright Copyright © 2023 VMP By Maneza
  */
+
+if (session_id() === '') {
+    session_start();
+} else {
+    // session_start();
+}
+
 
 // Database credentials
 $dbHost = 'localhost';
