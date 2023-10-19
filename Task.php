@@ -30,7 +30,6 @@ class Task
      */
     public function setId($id)
     {
-        // Validate and sanitize the ID, e.g., ensure it's a positive integer
         $this->id = $id;
     }
 
@@ -130,9 +129,9 @@ class Task
         global $db; // Use the database connection from connect.php
 
         // Prepare the SQL statement
-        $sql = "INSERT INTO tasks (title, description, due_date, user_id, completed) 
-        VALUES (?, ?, ?, ?, ?)";
-        var_dump($sql);
+        $sql = "INSERT INTO tasks (title, description, assign_to, due_date, user_id, completed) 
+        VALUES (?, ?, ?, ?, ?, ?)";
+
         // You should adjust this logic based on your actual application flow.
         $userId = null; // Initialize user ID as null
 
@@ -146,7 +145,7 @@ class Task
 
         // Bind parameters and execute the query
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("sssii", $this->title, $this->description, $this->dueDate, $userId, $this->completed);
+        $stmt->bind_param("ssssii", $this->title, $this->description, $this->assign_to, $this->dueDate, $userId, $this->completed);
 
         if ($stmt->execute()) {
 
@@ -168,10 +167,7 @@ class Task
         global $db; // Use the database connection from connect.php
 
         // Perform a query to fetch tasks from the database
-        $sql = "SELECT tasks.id, tasks.title, tasks.description, tasks.due_date, tasks.user_id, tasks.completed, users.name 
-                AS assigned_to
-                        FROM tasks
-                        LEFT JOIN users ON tasks.user_id = users.id";
+        $sql = "SELECT * FROM tasks";
         $result = $db->query($sql);
 
         $tasks = [];
@@ -184,7 +180,7 @@ class Task
                 $task->setTitle($row['title']);
                 $task->setDescription($row['description']);
                 $task->setDueDate($row['due_date']);
-                $task->setAssignedTo($row['assigned_to']);
+                $task->setAssignedTo($row['assign_to']);
                 $task->setUserId($row['user_id']);
                 $task->setCompleted($row['completed']);
                 $tasks[] = $task;
@@ -205,21 +201,17 @@ class Task
 
         // Prepare the SQL statement
         $sql = "UPDATE tasks 
-                SET title = ?, description = ?, due_date = ?, user_id = ?, completed = ? 
+                SET title = ?, description = ?, assign_to = ?, due_date = ?, completed = ?
                 WHERE id = ?";
-        $userId = null;
 
-        if (isset($_SESSION['user_id'])) {
-            $userId = $_SESSION['user_id'];
-        }
         // Bind parameters and execute the query
         $stmt = $db->prepare($sql);
         $stmt->bind_param(
-            "sssiii",
+            "ssssii",
             $this->title,
             $this->description,
+            $this->assign_to,
             $this->dueDate,
-            $this->userId,
             $this->completed,
             $this->id
         );
@@ -232,7 +224,12 @@ class Task
         }
     }
 
-    // Function to delete a task from the database
+    /**
+     * Delete Tasks
+     *
+     * @param [type] $id
+     * @return Boolean
+     */
     public function delete($id)
     {
         global $db; // Use the database connection from connect.php
@@ -277,6 +274,7 @@ class Task
                 $task->setId($taskData['id']);
                 $task->setTitle($taskData['title']);
                 $task->setDescription($taskData['description']);
+                $task->setAssignedTo($taskData['assign_to']);
                 $task->setDueDate($taskData['due_date']);
                 $task->setUserId($taskData['user_id']);
                 $task->setCompleted($taskData['completed']);

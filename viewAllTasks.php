@@ -130,7 +130,7 @@ $taskClass = new Task();
                                 <!-- <h3>Current Weather</h3> -->
                                 <ul>
                                      <li><strong>City:</strong> <?php echo isset($weatherData["name"]) ? $weatherData["name"] : "Sorry!! Your City can't be pulled by OpenWeather"; ?></li>
-                                    <li> <strong>Current Temp</strong>: <?php echo isset($weatherData["main"]["temp"]) ? $weatherData["main"]["temp"] : ""; ?></li>
+                                     <li> <strong>Current Temp</strong>: <?php echo isset($weatherData["main"]["temp"]) ? $weatherData["main"]["temp"] . "°C" : ""; ?></li>
                                     <li> <strong>Weather:</strong> <?php echo isset($weatherData["weather"][0]["description"]) ? $weatherData["weather"][0]["description"] : ""; ?></li>
                                 </ul>
                             </div>
@@ -218,7 +218,7 @@ $taskClass = new Task();
                                     <th>Assigned to</th>
                                     <th>Due Date</th>
                                     <th>Completed</th>
-                                    <th>User ID</th>
+                                    <th>Log by</th>
                                     <th data-orderable="false">Edit</th>
                                     <th data-orderable="false">Delete</th>
                                 </tr>
