@@ -156,7 +156,7 @@ class User
             // Your registration code here
             if ($stmt->execute()) {
                 $_SESSION['user_id'] = $this->getUserId();
-                $_SESSION['registration_success'] = 'User ' . $this->name . ' registered successfully!';
+                $_SESSION['registration_success'] = 'Heey!!! ' . $this->name . ' you registered successfully. Please Login..';
 
                 return true; // User saved successfully
             } else {
@@ -208,6 +208,7 @@ class User
 
             return true; // Password is correct
         } else {
+            $_SESSION['login_error'] = 'Aaaahh!!  check your email/password...';
             return false; // Password is incorrect
         }
     }
@@ -267,7 +268,7 @@ class User
 
             if ($stmt->execute()) {
                 // Send a reset email to the user with a link to reset their password
-                $resetLink = "http://ekomi.local/task-dashboard/resetPassword.php?email=" . $email . "&token=" . $resetToken; //edit this to your website
+                $resetLink = "{$this->getSiteUrl('/resetPassword.php')}?email=" . $email . "&token=" . $resetToken; //edit this to your website url if you not getting it
                 $message = "To reset your password, click on the following link:\n" . "<a href='{$resetLink}'>Reset your password now</a>";
                 $_SESSION['reset_password'] =  $message;
 
@@ -276,6 +277,17 @@ class User
         }
 
         return false;
+    }
+
+    function getSiteUrl($path = '/') {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+        $host = $_SERVER['HTTP_HOST'];
+        $scriptName = $_SERVER['SCRIPT_NAME'];
+        
+        // Remove the script filename to get the base URL
+        $baseUrl = dirname($scriptName);
+        
+        return $protocol . $host . $baseUrl . $path;
     }
 
 
@@ -344,7 +356,10 @@ class User
         $stmt = $db->prepare($sql);
         $stmt->bind_param("ss", $hashedPassword, $email);
         $result = $stmt->execute();
-        $stmt->close();
+        if ($result){
+            $_SESSION['updated_password'] = "Password reset was successful! | Please Login!";
+            $stmt->close();
+        }
 
         // Return true if the update was successful, false otherwise.
         return $result;
@@ -389,6 +404,34 @@ class User
     }
 
     /**
+     * Get usernames from Database 
+     *
+     * @return void
+     */
+    public function getUsersFromDatabase()
+    {
+        global $db;
+    
+        // Prepare the SQL statement to fetch all users
+        $sql = "SELECT id, name FROM users";
+    
+        // Execute the query
+        $result = $db->query($sql);
+    
+        if ($result) {
+            $userNames = [];
+    
+            while ($row = $result->fetch_assoc()) {
+                $userNames[] = $row;
+            }
+    
+            return $userNames;
+        } else {
+            return false; // Query failed
+        }
+    }
+    
+    /**
      * Get a user by ID
      *
      * @param string|int $userId
@@ -396,7 +439,7 @@ class User
      */
     public function getUserById($userId)
     {
-        global $db; // Use the database connection from Connection.php
+        global $db; 
 
         // Prepare the SQL statement to retrieve user data by user_id
         $sql = "SELECT * FROM users WHERE id = ?";
@@ -443,6 +486,8 @@ class User
         );
 
         if ($stmt->execute()) {
+            $_SESSION['user_updated'] = "User: {$this->name} updated successfully";
+
             return true; // user updated successfully
         } else {
             return false; // user could not be updated
@@ -467,6 +512,7 @@ class User
         $stmt->bind_param("i", $userId);
 
         if ($stmt->execute()) {
+            $_SESSION['user_deleted'] = "User: {$userId} deleted successfully";
             return true; // user deleted successfully
         } else {
             return false; // user could not be deleted

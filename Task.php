@@ -20,6 +20,7 @@ class Task
     private $dueDate;
     private $userId;
     private $completed;
+    private $assign_to;
 
     /**
      * Set Id
@@ -105,6 +106,20 @@ class Task
         return $this->completed;
     }
 
+    
+    // Getter method for name
+    public function getAssignedTo()
+    {
+        return $this->assign_to;
+    }
+
+    // Setter method for name
+    public function setAssignedTo($assign_to)
+    {
+        $this->assign_to = $assign_to;
+    }
+
+
     /**
      * Save New users
      *
@@ -153,7 +168,10 @@ class Task
         global $db; // Use the database connection from connect.php
 
         // Perform a query to fetch tasks from the database
-        $sql = "SELECT * FROM tasks";
+        $sql = "SELECT tasks.id, tasks.title, tasks.description, tasks.due_date, tasks.user_id, tasks.completed, users.name 
+                AS assigned_to
+                        FROM tasks
+                        LEFT JOIN users ON tasks.user_id = users.id";
         $result = $db->query($sql);
 
         $tasks = [];
@@ -161,10 +179,12 @@ class Task
         if ($result) {
             while ($row = $result->fetch_assoc()) {
                 $task = new Task();
+                // $user = new User();
                 $task->setId($row['id']);
                 $task->setTitle($row['title']);
                 $task->setDescription($row['description']);
                 $task->setDueDate($row['due_date']);
+                $task->setAssignedTo($row['assigned_to']);
                 $task->setUserId($row['user_id']);
                 $task->setCompleted($row['completed']);
                 $tasks[] = $task;
@@ -205,7 +225,7 @@ class Task
         );
 
         if ($stmt->execute()) {
-            $_SESSION['task_updated'] = "Task: {$this->title} saved successfully";
+            $_SESSION['task_updated'] = "Task: {$this->title} Updated successfully";
             return true; // Task updated successfully
         } else {
             return false; // Task could not be updated
