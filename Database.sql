@@ -8,7 +8,6 @@ CREATE TABLE users (
   `reset_token` varchar(255) DEFAULT NULL,
   `reset_expiration` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
 );
 
 -- Create Tasks Table

@@ -205,7 +205,7 @@ $taskClass = new Task();
                     $alltasks = $taskClass->getAllTasks();
                     // Check if there are no tasks, and display the "Create Task" button if true
                     if (empty($alltasks)) {
-                        echo '<a  href="createTask.php" class="btn btn-primary">Create a Task</a>';
+                        // echo '<a  href="createTask.php" class="btn btn-primary">Create a Task</a>';
                     } else {
                     ?>
 

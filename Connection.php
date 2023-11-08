@@ -18,10 +18,10 @@ if (session_id() === '') {
 
 
 // Database credentials
-$dbHost = 'localhost';
-$dbName = 'ekomi';
-$dbUser = 'root';
-$dbPassword = '';
+$dbHost = 'db';
+$dbName = 'taskManage';
+$dbUser = 'admin';
+$dbPassword = 'admin124';
 
 $db = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
 
