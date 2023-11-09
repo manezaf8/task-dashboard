@@ -20,8 +20,8 @@ if (session_id() === '') {
 // Database credentials
 $dbHost = 'db';
 $dbName = 'taskManage';
-$dbUser = 'admin';
-$dbPassword = 'admin124';
+$dbUser = 'user';
+$dbPassword = 'userPassword';
 
 $db = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
 
