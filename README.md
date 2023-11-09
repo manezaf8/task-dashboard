@@ -16,7 +16,7 @@ copy of phpMyAdmin is included for easy database administration.
   ## Run Docker images
 On the command line (the terminal)
 - Clone this repo
-  - `git clone https://github.com/manezaf8/task-management-docker.git` edit `Connection.php` if you have another DB details
+  - `git clone [The Repo](https://github.com/manezaf8/task-dashboard.git)` edit `Connection.php` if you have another DB details
 - Change into the directory
 - `cd task-management-docker`
 - Change the MySQL account info in the `docker-compose.yml` file if you want
