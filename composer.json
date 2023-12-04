@@ -1,0 +1,22 @@
+{
+    "name": "maneza/task-management-project",
+    "description": "this is the task management app",
+    "authors": [
+        {
+            "name": "Ntabethemba Ntshoza",
+            "email": "bmaneza@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Controller\\": "controllers/",
+            "Core\\": "core/",
+            "Model\\": "models/",
+            "Controller\\Tasks\\": "controllers/Tasks/",
+            "Controller\\Users\\": "controllers/Users/"
+        }
+    }
+}
