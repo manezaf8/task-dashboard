@@ -9,8 +9,9 @@
 
 namespace Model;
 
-use Core\Database;
 use mysqli;
+use Exception;
+use Core\Database;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -172,19 +173,16 @@ class User
                 $_SESSION['registration_success'] = 'Heey!!! ' . $this->name . ' you registered successfully. Please Login..';
                 $this->logger->critical("{$this->getName()} Registered successfully!!");
 
-                session_destroy();
-
                 return true; // User saved successfully
             } else {
                 $_SESSION['registration_error'] = 'An error occurred while registering. This email address is already in use.';
                 $this->logger->critical(var_export($_SESSION['registration_error'], true));
-                $this->logger->critical('An error occurred while registering. This email address is already in use.');
 
                 return false; // User could not be saved
             }
         } catch (mysqli_sql_exception $e) {
             $_SESSION['registration_error'] = 'An error occurred while registering. This email address is already in use.';
-            $this->logger->critical(var_export($e, true));
+            $this->logger->error('An exception occurred', ['exception' => $e]);
         }
     }
 
@@ -197,40 +195,51 @@ class User
      */
     public function login($email, $password)
     {
-        // Prepare the SQL statement to retrieve user data based on the provided email
-        $sql = "SELECT id, name, email, password FROM users WHERE email = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
+        try {
+            // Prepare the SQL statement to retrieve user data based on the provided email
+            $sql = "SELECT id, name, email, password FROM users WHERE email = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
 
-        if ($stmt->error) {
-            die("Database query error: " . $stmt->error);
-        }
+            if ($stmt->error) {
+                $errorMessage = "Database query error: " . $stmt->error;
+                $this->logger->error($errorMessage);
+                die($errorMessage);
+            }
 
-        $result = $stmt->get_result();
+            $result = $stmt->get_result();
 
-        // Check if a user with the provided email exists
-        if ($result->num_rows === 0) {
-            $_SESSION['login_error'] = 'Aaaahh!!  check your email/password...';
+            // Check if a user with the provided email exists
+            if ($result->num_rows === 0) {
+                $_SESSION['login_error'] = 'Aaaahh!! Check your email/password...';
+                return false; // User not found
+            }
 
-            return false; // User not found
-        }
+            // Fetch the user data
+            $user = $result->fetch_assoc();
 
-        // Fetch the user data
-        $user = $result->fetch_assoc();
+            // Verify the provided password against the stored hash
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['name'];
+                $_SESSION['login_success'] = 'Hey ' . $user['name'] . ' you are logged in successfully!';
 
-        // Verify the provided password against the stored hash
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['name'];
-            $_SESSION['login_success'] = 'Hey ' . $user['name'] . '  you are logged in successfully!';
+                return true;
+            } else {
+                $_SESSION['login_error'] = 'Aaaahh!! Check your email/password...';
 
-            return true;
-        } else {
-            $_SESSION['login_error'] = 'Aaaahh!!  check your email/password...';
-            return false; // Incorrect password
+                return false; // Incorrect password
+            }
+        } catch (Exception $e) {
+            $errorMessage = 'An exception occurred: ' . $e->getMessage();
+            $this->logger->error($errorMessage, ['exception' => $e]);
+            $_SESSION['login_error'] = 'Aaaahh!! Something went wrong...';
+
+            return false; // Handle unexpected exceptions
         }
     }
+
 
 
     /**

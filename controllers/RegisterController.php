@@ -45,10 +45,12 @@ class RegisterController
 
                 try {
                     if($user->save()){
+                        $_SESSION['registration_success'] = 'Heey!!! ' . $this->name . ' you registered successfully. Please Login..';
                         redirect('/');
                     }
                 } catch (\Throwable $th) {
                     echo 'An error occurred. Please try again later.' . $th;
+                    $_SESSION['registration_error'] = 'An error occurred while registering. This email address is already in use.';
                     $this->logger->critical(var_export($th, true));
                 }
             }

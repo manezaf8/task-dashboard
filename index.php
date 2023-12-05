@@ -66,9 +66,6 @@ if (array_key_exists($cleanRoute, $routes)) {
         parse_str(substr($requestUri, $queryPosition + 1), $queryParams);
     }
 
-    // Debug: Output the query parameters
-    error_log("Query Parameters: " . print_r($queryParams, true));
-
     // Pass $queryParams to the method
     $controllerInstance = new $controller();
     $controllerInstance->$method($queryParams);

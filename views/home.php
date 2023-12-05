@@ -72,13 +72,13 @@
                             <h1>Welcome</h1>
                             <span>Login / Signup to continue</span>
                             <ul class="crumb">
-                            <?php if (isset($_SESSION['user_id'])) : ?>
-                                 <li><a href="<?= BASE_URL . '/tasks' ?>">Home</a>
-                                </li>
-                            <?php elseif (!isset($_SESSION['user_id'])) : ?>
-                                <li><a href="<?= BASE_URL . '/' ?>">Home</a>
-                                </li>
-                            <?php endif; ?>
+                                <?php if (isset($_SESSION['user_id'])) : ?>
+                                    <li><a href="<?= BASE_URL . '/tasks' ?>">Home</a>
+                                    </li>
+                                <?php elseif (!isset($_SESSION['user_id'])) : ?>
+                                    <li><a href="<?= BASE_URL . '/' ?>">Home</a>
+                                    </li>
+                                <?php endif; ?>
                                 <li class="sep">/</li>
                             </ul>
                         </div>
@@ -109,9 +109,24 @@
 
                         <?php if (isset($_SESSION['login_error'])) : ?>
                             <div class="alert alert-error"><?php echo $_SESSION['login_error']; ?></div>
-                            <?php unset($_SESSION['login_error']); // Clear the message after displaying
+                            <?php //unset($_SESSION['login_error']); // Clear the message after displaying
                             ?>
                         <?php endif; ?>
+
+                        <?php
+                        if (isset($_SESSION['login_error'])) {
+                            // Use SweetAlert to display the error message
+                            echo '<script>
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "' . $_SESSION['login_error'] . '"
+                            });
+                        </script>';
+                            // Clear the session variable
+                            unset($_SESSION['login_error']);
+                        }
+                        ?>
 
 
                         <?php if (isset($_SESSION['registration_success'])) : ?>
@@ -217,6 +232,11 @@
             </div>
     </div>
     </div>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="assets/includes/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- content close -->
 
     <?php require __DIR__ . '/../views/partials/footer.php';

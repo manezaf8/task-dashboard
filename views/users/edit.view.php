@@ -202,8 +202,8 @@ if (isset($_GET['id'])) {
         <script>
             function logoutNow() {
                 if (confirm("Are you sure you want to logout?")) {
-                    // Redirect to logout.php
-                    window.location.href = "logout.php";
+                    // Redirect to logout
+                    window.location.href = "/ekomi/task-dashboard/logout";
                 }
             }
         </script>

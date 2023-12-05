@@ -1,19 +1,16 @@
 <?php
 
-require __DIR__ . '/../../models/Users.php';
-require __DIR__ . '/../../helper/weather.php';
-
-use Model\User;
-
-// require 'models/Users.php';
-
-
 /**
  * @package   Task Management
  * @author    Ntabethemba Ntshoza
  * @date      11-10-2023
  * @copyright Copyright © 2023 VMP By Maneza
  */
+
+require __DIR__ . '/../../models/Users.php';
+require __DIR__ . '/../../helper/weather.php';
+
+use Model\User;
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -197,8 +194,8 @@ $city =  $usersClass->getWeatherCity();
                                         <script>
                                             function logoutNow() {
                                                 if (confirm("Are you sure you want to logout?")) {
-                                                    // Redirect to logout.php
-                                                    window.location.href = "logout.php";
+                                                    // Redirect to logout.
+                                                    window.location.href = "/ekomi/task-dashboard/logout";
                                                 }
                                             }
 
