@@ -17,7 +17,7 @@
     <!-- Include your CSS and Bootstrap links here -->
 
     <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="includes/styles.css">
+    <link rel="stylesheet" href="assets/includes/styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
@@ -31,14 +31,20 @@
                     ?>
                 <?php endif; ?>
 
+                <?php if (isset($_SESSION['error_password'])) : ?>
+                    <div class="alert alert-error"><?php echo $_SESSION['error_password']; ?></div>
+                    <?php unset($_SESSION['error_password']); // Clear the message after displaying
+                    ?>
+                <?php endif; ?>
+
                 <h1 class="text-center">Reset Your Password</h1>
                 <?php if (isset($resetPasswordSuccess)) : ?>
-                            <p class="text-success"><?php echo $resetPasswordSuccess; ?></p>
-                        <?php endif; ?>
+                    <p class="text-success"><?php echo $resetPasswordSuccess; ?></p>
+                <?php endif; ?>
 
-                        <?php if (isset($resetPasswordError)) : ?>
-                            <p class="text-success"><?php echo $resetPasswordError; ?></p>
-                        <?php endif; ?>
+                <?php if (isset($resetPasswordError)) : ?>
+                    <p class="text-success"><?php echo $resetPasswordError; ?></p>
+                <?php endif; ?>
 
                 <form method="post" action="/ekomi/task-dashboard/reset-password-submit">
                     <div class="form-group">

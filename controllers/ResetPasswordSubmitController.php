@@ -8,7 +8,7 @@ use Model\User;
 
 class ResetPasswordSubmitController
 {
-    public static function submit()
+    public static function submit($queryParams)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Get form data (new password)
@@ -18,9 +18,12 @@ class ResetPasswordSubmitController
             // Check if the passwords match
             if ($newPassword === $confirmPassword) {
                 // Check if the provided email and token are valid
-                if (isset($_GET['email']) && isset($_GET['token'])) {
-                    $email = $_GET['email']; // You can get these from the query parameters.
-                    $token = $_GET['token'];
+                $email = $_SESSION['email'];
+                $token = $_SESSION['token'];
+
+                if (!empty($email) && !empty($token)) {
+                    // $email = $queryParams['email']; // You can get these from the query parameters.
+                    // $token = $queryParams['token'];
 
                     $user = new User(); // Assuming you have a User class with appropriate methods.
 
@@ -29,9 +32,8 @@ class ResetPasswordSubmitController
                         $user->updatePassword($email, $newPassword);
 
                         // Password updated successfully
-                        $resetPasswordSuccess = "Password reset successfully. You will be redirected to the login page in 5 seconds. If not, click <a href='/'>here</a>.";
-
                         echo '<meta http-equiv="refresh" content="5;url=/">';
+                        session_destroy();
 
                         return redirect('/');
                     } else {
@@ -40,8 +42,9 @@ class ResetPasswordSubmitController
                     }
                 } else {
                     echo "Email or token is not valid make sure the link is valid or <a href='/'>log in again</a>";
-
-                    return redirect('/');
+                    $_SESSION['error_password'] = "Email or token is not valid make sure the link is valid or try to <a href='/ekomi/task-dashboard/'>log in again</a>";
+                
+                    return redirect('/reset-password');
                 }
             } else {
                 // Passwords don't match

@@ -14,13 +14,21 @@ session_start();
 
 $routes = include 'router.php';
 
+// Copy the current request URI to another variable
+$requestUri = $_SERVER['REQUEST_URI'];
 
-$route = $_SERVER['REQUEST_URI'];
-$route = strtok($_SERVER['REQUEST_URI'], '?');
+// Find the position of '?' in the request URI
+$queryPosition = strpos($requestUri, '?');
+
+// Extract the path and query parameters
+$cleanRoute = $queryPosition !== false ? substr($requestUri, 0, $queryPosition) : $requestUri;
+
+// Original route with the query string
+$route = $requestUri;
 
 // Map out the controllers for the project
-if (array_key_exists($route, $routes)) {
-    $action = $routes[$route];
+if (array_key_exists($cleanRoute, $routes)) {
+    $action = $routes[$cleanRoute];
 
     [$controller, $method] = explode('::', $action);
 
@@ -47,8 +55,23 @@ if (array_key_exists($route, $routes)) {
 
     $logger->info($controller);
 
+    // Check if the method requires parameters
+    $reflectionMethod = new ReflectionMethod($controller, $method);
+    $parameters = $reflectionMethod->getParameters();
+
+    $queryParams = [];
+
+    // Extract parameters from query string if they are required
+    if ($queryPosition !== false) {
+        parse_str(substr($requestUri, $queryPosition + 1), $queryParams);
+    }
+
+    // Debug: Output the query parameters
+    error_log("Query Parameters: " . print_r($queryParams, true));
+
+    // Pass $queryParams to the method
     $controllerInstance = new $controller();
-    $controllerInstance->$method();
+    $controllerInstance->$method($queryParams);
 } else {
     abort();
 }

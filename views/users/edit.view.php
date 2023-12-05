@@ -107,7 +107,7 @@ if (isset($_GET['id'])) {
                 <div id="logo" style=" width: 250px; height: auto; ">
                     <div class="inner">
                         <a href="<?= BASE_URL . '/tasks' ?>">
-                            <img src="images/logo.png" alt="logo"></a>
+                            <img src="assets/images/logo.png" alt="logo"></a>
                     </div>
                 </div>
 

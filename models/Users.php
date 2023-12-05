@@ -290,6 +290,8 @@ class User
                 $resetLink = "{$this->getSiteUrl('/reset-password')}?email=" . $email . "&token=" . $resetToken; //edit this to your website url if you not getting it
                 $message = "To reset your password, click on the following link:\n" . "<a href='{$resetLink}'>Reset your password now</a>";
                 $_SESSION['reset_password'] =  $message;
+                $_SESSION['email'] =  $email;
+                $_SESSION['token'] =  $resetToken;
 
                 return true;
             }
