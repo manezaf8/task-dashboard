@@ -1,3 +1,4 @@
+<?php //phpinfo();  ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +71,7 @@
                     <div class="row">
                         <div class="span12">
                             <h1>Welcome</h1>
-                            <span>Login / Signup to continue</span>
+                            <span>Login / Signup</span>
                             <ul class="crumb">
                                 <?php if (isset($_SESSION['user_id'])) : ?>
                                     <li><a href="<?= BASE_URL . '/tasks' ?>">Home</a>
@@ -153,7 +154,7 @@
                             Feel free to contact us here (111) 333 7777 if you having issue.<br />
                             <br />
                             <div class="contact_form_holder">
-                                <form id="contact loginForm" class="row" action="/ekomi/task-dashboard/login-submit" method="post">
+                                <form id="contact loginForm" class="row" action="/login-submit" method="post">
 
                                     <div class="span4">
                                         <label>Email <span class="req">*</span></label>
@@ -202,7 +203,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- Registration form -->
-                                    <form action="/ekomi/task-dashboard/register-submit" method="post" id="createUserForm">
+                                    <form action="/register-submit" method="post" id="createUserForm">
                                         <div class="form-group">
                                             <label for="createName">Name:</label>
                                             <input type="text" class="form-control" id="name createName" name="name" required>

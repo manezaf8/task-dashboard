@@ -29,6 +29,11 @@ class User
     private $db;
     private $logger;
 
+    /**
+     * User Model constructor
+     *
+     * @param mysqli|null $db
+     */
     public function __construct(mysqli $db = null)
     {
         $this->db = Database::connect();

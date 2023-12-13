@@ -102,9 +102,13 @@
             <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                 <h1 class="text-2xl font-bold">Sorry. Page Not Found.</h1>
 
-                <p class="mt-4">
-                    <a href="<?= BASE_URL . '/tasks' ?>" class="text-blue-500 underline">Go back home.</a>
+                <?php if (isset($_SESSION['user_id'])) : ?>
+                    <p  class="mt-4"><a class="text-blue-500 underline" href="<?= BASE_URL . '/tasks' ?>">Go back home.</a>
                 </p>
+                <?php elseif (!isset($_SESSION['user_id'])) : ?>
+                    <p  class="mt-4"><a class="text-blue-500 underline" href="<?= BASE_URL . '/' ?>">Go back home.</a>
+                </p>
+                <?php endif; ?>
             </div>
         </main>
 

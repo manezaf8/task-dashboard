@@ -1,5 +1,7 @@
 <?php
 
+use Core\Response;
+
 function dd($value)
 {
     echo '<pre>';
@@ -27,47 +29,22 @@ function redirect($path) {
  * @param String $path
  * @return String
  */
-function base_path($path)
+function getBasePath($path)
 {
     return BASE_PATH . $path;
 }
 
 /**
- * Rander view
- *
- * @param [type] $view
- * @param array $data
- * @return void
- */
-function render($view, $data = [])
-{
-    extract($data); // Extract variables from the associative array
-
-    // Use output buffering to capture the view content
-    ob_start();
-
-    // Include the view file
-    $viewPath = __DIR__ . '/../views/' . $view;
-    include $viewPath;
-
-    // Get the captured content
-    $content = ob_get_clean();
-
-    // Output the content directly
-    echo $content;
-}
-
-/**
- * Abort 404 error
+ * handle 404 error
  *
  * @param integer $code
  * @return void
  */
-function abort($code = 404)
+function abort($code = Response::NOT_FOUND)
 {
     http_response_code($code);
 
-    require base_path("/views/{$code}.php");
+    require getBasePath("/views/{$code}.php");
 
     die();
 }

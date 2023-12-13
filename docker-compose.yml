@@ -1,23 +1,28 @@
 version: '3.8'
 
-# Let's build all the services required to run this app (dev version)
-# We need -
-# MySQL => Database
-# Apache2 => Web Server
-# phpMyAdmin
 services:
-  php-apache-environment:
-    container_name: php-apache
+  nginx:
+    container_name: nginx
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./fastcgi-php.conf:/etc/nginx/snippets/fastcgi-php.conf
+      - .:/var/www/html
+    ports:
+      - 8100:80
+    links:
+      - php-fpm
+
+  php-fpm:
     build:
       context: ./
       dockerfile: Dockerfile
     depends_on:
       - db
     volumes:
-      - .:/var/www/html/
-    ports:
-      - 8100:80
-      - "9001:9001" #xdebug port
+      - .:/var/www/html
+    expose:
+      - 9000
 
   db:
     container_name: db
@@ -40,8 +45,6 @@ services:
     restart: always
     environment:
       PMA_HOST: db
-    depends_on:
-      - db
 
 volumes:
   mysql-data:

@@ -202,7 +202,7 @@ $taskClass = new Task();
 
                                         <td>
                                             <!-- Display user ID as a clickable link -->
-                                            <a href="/ekomi/task-dashboard/users-profile?user_id=<?php echo $task->getUserId(); ?>">
+                                            <a href="/users-profile?user_id=<?php echo $task->getUserId(); ?>">
                                                 <?php echo $task->getUserId(); ?>
                                             </a>
                                         </td>
@@ -219,20 +219,20 @@ $taskClass = new Task();
                                         <script>
                                             function deleteTask(taskId) {
                                                 if (confirm("Are you sure you want to delete this task?")) {
-                                                    window.location.href = "/ekomi/task-dashboard/tasks-delete?id=" + taskId;
+                                                    window.location.href = "/tasks-delete?id=" + taskId;
                                                 }
                                             }
 
                                             function logoutNow() {
                                                 if (confirm("Are you sure you want to logout?")) {
-                                                    window.location.href = "/ekomi/task-dashboard/logout";
+                                                    window.location.href = "/logout";
                                                 }
                                             }
 
 
                                             function editTask(taskId) {
                                                 if (confirm("Are you sure you want to edit this task?")) {
-                                                    window.location.href = "/ekomi/task-dashboard/tasks-edit?id=" + taskId;
+                                                    window.location.href = "/tasks-edit?id=" + taskId;
                                                 }
                                             }
                                         </script>

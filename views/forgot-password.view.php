@@ -6,6 +6,7 @@
  * @copyright Copyright © 2023 VMP By Maneza
  */
 
+//  include __DIR__ . '/../index.php';
 
 ?>
 
@@ -50,7 +51,7 @@
                     <div class="alert alert-danger text-center"><?php echo $emailNotExistsMessage; ?></div>
                 <?php endif; ?>
 
-                <form id="forgotPassword" action="/ekomi/task-dashboard/forgot-password-submit" method="post">
+                <form id="forgotPassword" action="/forgot-password-submit" method="post">
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" required>

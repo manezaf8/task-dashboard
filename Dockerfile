@@ -1,17 +1,23 @@
-FROM php:8.1-apache
+# Use the official PHP image with FPM
+FROM php:8.1-fpm
 
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
-RUN apt-get update && apt-get upgrade -y
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
-RUN pecl install xdebug \
-&& docker-php-ext-enable xdebug
+# Install required extensions
+RUN docker-php-ext-install mysqli \
+    && pecl install xdebug \
+    && docker-php-ext-enable mysqli xdebug
 
-RUN apt -y install git
-RUN apt -y install nano
-# # Install Git
-# RUN apk --no-cache add git
+# Install Composer
+RUN apt-get update \
+    && apt-get install -y nano \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# # Set the working directory
-# WORKDIR /var/www/html/ 
+# Set the working directory
+WORKDIR /var/www/html
 
-# # Clone your Git repository
+# Copy the project files to the container
+COPY . /var/www/html
+
+RUN chown -R www-data:www-data .
+
+# Expose port 9000 for PHP-FPM
+# EXPOSE 9000

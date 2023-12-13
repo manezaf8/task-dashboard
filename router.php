@@ -1,27 +1,27 @@
 <?php
 
 return [
-    '/ekomi/task-dashboard/' => 'HomeController::index',
-    '/ekomi/task-dashboard/logout' => 'LogoutController::logout',
-    '/ekomi/task-dashboard/forgot-password' => 'ForgotPasswordController::forgot',
-    '/ekomi/task-dashboard/forgot-password-submit' => 'ForgotPasswordSubmitController::submit',
-    '/ekomi/task-dashboard/reset-password' => 'ResetPasswordController::reset',
-    '/ekomi/task-dashboard/reset-password-submit' => 'ResetPasswordSubmitController::submit',
+    '/' => '/views/home.php',
+    '/logout' => '/controllers/LogoutController.php',
+    '/forgot-password' => '/views/forgot-password.view.php',
+    '/forgot-password-submit' => '/controllers/ForgotPasswordSubmitController.php',
+    '/reset-password' => '/views/reset.view.php',
+    '/reset-password-submit' => '/controllers/ResetPasswordSubmitController.php',
 
-    '/ekomi/task-dashboard/tasks' => 'TasksController::tasks',
-    '/ekomi/task-dashboard/tasks-create' => 'TasksCreateController::create',
-    '/ekomi/task-dashboard/tasks-create-submit' => 'TasksCreateSubmitController::submit',
-    '/ekomi/task-dashboard/tasks-edit' => 'TasksEditController::edit',
-    '/ekomi/task-dashboard/tasks-edit-submit' => 'TasksSubmitController::submit',
-    '/ekomi/task-dashboard/tasks-delete' => 'TasksDeleteController::delete',
+    '/tasks' => '/views/tasks/tasks.view.php',
+    '/tasks-create' => '/views/tasks/create.view.php',
+    '/tasks-create-submit' => '/controllers/Tasks/TasksCreateSubmitController.php',
+    '/tasks-edit' => '/views/tasks/edit.view.php',
+    '/tasks-edit-submit' => '/controllers/Tasks/TasksSubmitController.php',
+    '/tasks-delete' => '/controllers/Tasks/TasksDeleteController.php',
 
-    '/ekomi/task-dashboard/users' => 'UsersController::users',
-    '/ekomi/task-dashboard/users-edit' => 'UsersEditController::edit',
-    '/ekomi/task-dashboard/users-edit-submit' => 'UsersSubmitController::submit',
-    '/ekomi/task-dashboard/users-delete' => 'UsersDeleteController::delete',
-    '/ekomi/task-dashboard/users-profile' => 'ProfileController::profile',
+    '/users' => '/views/users/users.view.php',
+    '/users-edit' => '/views/users/edit.view.php',
+    '/users-edit-submit' => '/controllers/Users/UsersSubmitController.php',
+    '/users-delete' => '/controllers/Users/UsersDeleteController.php',
+    '/users-profile' => '/views/users/profile.view.php',
 
-    '/ekomi/task-dashboard/login-submit' => 'LoginController::login',
-    '/ekomi/task-dashboard/register-submit' => 'RegisterController::register',
+    '/login-submit' => '/controllers/LoginController.php',
+    '/register-submit' => '/controllers/RegisterController.php'
 ];
 

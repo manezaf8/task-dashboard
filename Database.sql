@@ -7,7 +7,7 @@ CREATE TABLE users (
   `password` varchar(255) NOT NULL,
   `reset_token` varchar(255) DEFAULT NULL,
   `reset_expiration` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 );
 
 -- Create Tasks Table

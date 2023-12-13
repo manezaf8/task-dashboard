@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Core;
 
@@ -11,7 +11,8 @@ class Database
     public static function connect()
     {
         if (!self::$connection) {
-            $config = include __DIR__ . '/../config.php';
+            // $config = include __DIR__ . '/../config.php';
+            $config =  include BASE_PATH . '/config.php';
 
             $host = $config['host'];
             $username = $config['username'];

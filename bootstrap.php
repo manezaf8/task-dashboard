@@ -1,5 +1,5 @@
 <?php
-define('BASE_URL', 'http://ekomi.local/ekomi/task-dashboard');
+define('BASE_URL', 'http://localhost:8100');
 
 
 use Monolog\Logger;

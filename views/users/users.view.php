@@ -195,21 +195,21 @@ $city =  $usersClass->getWeatherCity();
                                             function logoutNow() {
                                                 if (confirm("Are you sure you want to logout?")) {
                                                     // Redirect to logout.
-                                                    window.location.href = "/ekomi/task-dashboard/logout";
+                                                    window.location.href = "/logout";
                                                 }
                                             }
 
                                             function deleteTask(taskId) {
                                                 if (confirm("Are you sure you want to delete this user?")) {
                                                     // Redirect to deleteTask.php with the task ID
-                                                    window.location.href = "/ekomi/task-dashboard/users-delete?id=" + taskId;
+                                                    window.location.href = "/users-delete?id=" + taskId;
                                                 }
                                             }
 
                                             function editTask(taskId) {
                                                 if (confirm("Are you sure you want to edit this user?")) {
                                                     // Redirect to deleteTask.php with the task ID
-                                                    window.location.href = "/ekomi/task-dashboard/users-edit?id=" + taskId;
+                                                    window.location.href = "/users-edit?id=" + taskId;
                                                 }
                                             }
                                         </script>

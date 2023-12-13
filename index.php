@@ -2,73 +2,45 @@
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+
 error_reporting(E_ALL);
 
 const BASE_PATH = __DIR__;
 
-require BASE_PATH . '/vendor/autoload.php';
 require BASE_PATH . '/helper/functions.php';
-require BASE_PATH . '/bootstrap.php';
+
+require getBasePath('/vendor/autoload.php');
+require getBasePath('/bootstrap.php');
 
 session_start();
 
-$routes = include 'router.php';
+try {
+    $routes = include getBasePath('/router.php');
 
-// Copy the current request URI to another variable
-$requestUri = $_SERVER['REQUEST_URI'];
+    // Get the current route without query parameters
+    $route = strtok($_SERVER['REQUEST_URI'], '?');
 
-// Find the position of '?' in the request URI
-$queryPosition = strpos($requestUri, '?');
+    $routeFound = false;
 
-// Extract the path and query parameters
-$cleanRoute = $queryPosition !== false ? substr($requestUri, 0, $queryPosition) : $requestUri;
+    foreach ($routes as $routePattern => $controllerFile) {
+        // Check if the route matches the pattern (without query parameters)
+        if ($route === $routePattern) {
+            // Include the corresponding file
+            require getBasePath('') . $controllerFile;
+            // Set flag to indicate route found
+            $routeFound = true;
 
-// Original route with the query string
-$route = $requestUri;
-
-// Map out the controllers for the project
-if (array_key_exists($cleanRoute, $routes)) {
-    $action = $routes[$cleanRoute];
-
-    [$controller, $method] = explode('::', $action);
-
-    // Adjust the namespace and path based on the folder structure
-    $controllerNamespace = 'Controller\\';
-    $controllerPath = BASE_PATH . '/controllers/';
-
-    // If it's a Tasks controller in a subfolder
-    if (strpos($controller, 'Tasks') === 0) {
-        $controllerNamespace .= 'Tasks\\';
-        $controllerPath .= 'Tasks/';
+            // Exit the loop since we found a match
+            break;
+        }
     }
 
-    // If it's a Users controller in a subfolder
-    if (strpos($controller, 'Users') === 0) {
-        $controllerNamespace .= 'Users\\';
-        $controllerPath .= 'Users/';
+    // If no route matches, handle 404 or redirect as needed
+    if (!$routeFound) {
+        abort();
     }
-
-    require $controllerPath . $controller . '.php';
-
-    // Assuming the controllers are in a namespace
-    $controller = $controllerNamespace . $controller;
-
-    $logger->info($controller);
-
-    // Check if the method requires parameters
-    $reflectionMethod = new ReflectionMethod($controller, $method);
-    $parameters = $reflectionMethod->getParameters();
-
-    $queryParams = [];
-
-    // Extract parameters from query string if they are required
-    if ($queryPosition !== false) {
-        parse_str(substr($requestUri, $queryPosition + 1), $queryParams);
-    }
-
-    // Pass $queryParams to the method
-    $controllerInstance = new $controller();
-    $controllerInstance->$method($queryParams);
-} else {
+} catch (\Throwable $th) {
+    $logger->error('An exception occurred', ['exception' => $th->getMessage()]);
     abort();
 }
+

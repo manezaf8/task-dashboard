@@ -114,7 +114,7 @@ $allUsers = $users->getAllUsers();
                 <hr class="blank">
 
                 <!-- Task edit form -->
-                <form class="form-horizontal col-md-6 col-md-offset-3" method="post" action="/ekomi/task-dashboard/tasks-create-submit">
+                <form class="form-horizontal col-md-6 col-md-offset-3" method="post" action="/tasks-create-submit">
                     <div class="form-group">
                         <label for="title" class="col-sm-2">Title:</label>
                         <div class="col-sm-10">

@@ -46,7 +46,7 @@
                     <p class="text-success"><?php echo $resetPasswordError; ?></p>
                 <?php endif; ?>
 
-                <form method="post" action="/ekomi/task-dashboard/reset-password-submit">
+                <form method="post" action="/reset-password-submit">
                     <div class="form-group">
                         <label for="newPassword">New Password:</label>
                         <input type="password" class="form-control" name="newPassword" required>

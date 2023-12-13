@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'host' => 'localhost',
-    'username' => 'root',
-    'password' => '',
-    'database' => 'ekomi',
+    'host' => 'db',
+    'username' => 'admin',
+    'password' => 'admin124',
+    'database' => 'taskManage',
 ];

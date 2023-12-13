@@ -117,7 +117,7 @@ if (isset($_GET['id'])) {
                 <hr class="blank">
 
                 <!-- Task edit form -->
-                <form style="width: 75%;" id="editUser loginForm" method="post" action="/ekomi/task-dashboard/tasks-edit-submit" class="form-horizontal">
+                <form style="width: 75%;" id="editUser loginForm" method="post" action="/tasks-edit-submit" class="form-horizontal">
                     <input type="hidden" name="id" value="<?php echo $task->getId(); ?>">
 
                     <div class="form-group">
@@ -182,7 +182,7 @@ if (isset($_GET['id'])) {
         function logoutNow() {
             if (confirm("Are you sure you want to logout?")) {
                 // Redirect to logout
-                window.location.href = "/ekomi/task-dashboard/logout";
+                window.location.href = "/logout";
             }
         }
     </script>

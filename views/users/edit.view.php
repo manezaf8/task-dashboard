@@ -171,7 +171,7 @@ if (isset($_GET['id'])) {
                     <hr class="blank">
 
                     <!-- user edit form -->
-                    <form style="width: 65%;" method="post" action="/ekomi/task-dashboard/users-edit-submit" class="form-horizontal">
+                    <form style="width: 65%;" method="post" action="/users-edit-submit" class="form-horizontal">
                         <input type="hidden" name="id" value="<?php echo $userData['id']; ?>">
 
                         <div class="form-group">
@@ -203,7 +203,7 @@ if (isset($_GET['id'])) {
             function logoutNow() {
                 if (confirm("Are you sure you want to logout?")) {
                     // Redirect to logout
-                    window.location.href = "/ekomi/task-dashboard/logout";
+                    window.location.href = "/logout";
                 }
             }
         </script>
