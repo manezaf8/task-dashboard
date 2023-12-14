@@ -1,8 +1,8 @@
 # task-management-docker
 
-Docker with Apache, PHP, MySQL, phpMyAdmin
+Docker with Nginx, PHP, MySQL, phpMyAdmin
 
-These set of images creates a container running an Apache Web server with a
+These set of images creates a container running an Nginx Web server with a
 MySQL database backend. PHP is the language of choice in this setup. A running
 copy of phpMyAdmin is included for easy database administration.
 
@@ -48,7 +48,7 @@ On the command line (the terminal)
 
   ```
   - The server/host/database url is `db` which is the name of the MySQL
-    container. Because the PHP, Apache and Mysql are all in containers, they
+    container. Because the PHP, Nginx and Mysql are all in containers, they
     know to connect to each other through shortcut network names.
 
 # Software Updates
@@ -67,9 +67,9 @@ you choose.
 
 ## PHP
 For PHP, the image is set on the first line in the Dockerfile `FROM
-php:8-apache` will grab the latest version of PHP 8. To get the latest version
-of PHP 8.3, change the line to `FROM php:8.3-apache`. PHP developers set the
-version of Apache. This can not be changed (easily). For more options, see the
+php:8-fpm` will grab the latest version of PHP 8. To get the latest version
+of PHP 8.3, change the line to `FROM php:8.3-Nginx`. PHP developers set the
+version of Nginx. This can not be changed (easily). For more options, see the
 offical DockerHub page [https://hub.docker.com/_/php ](https://hub.docker.com/_/php).
 
 
@@ -78,7 +78,7 @@ To add more PHP extensions, add the package to install in the list of packages
 to install after the 'apt-get install' line (put them in alphabetical order).
 Then add a 'docker-php-ext-install' line.
 
-FROM php:8-apache
+FROM php:8.1-fpm
 
 RUN apt-get update && apt-get install -y \
   imagemagick \
